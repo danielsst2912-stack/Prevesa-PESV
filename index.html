@@ -462,6 +462,7 @@ function renderLogin(root){
     <button class="btn primary" type="submit" id="lg-go">Entrar</button></form>`;
   wireEyes(root);
   $("#lg").onsubmit=async e=>{e.preventDefault(); const b=$("#lg-go"); b.disabled=true; b.textContent="Verificando…";
+  console.log("URL actual:", SUPABASE_URL);
     const {error}=await sb.auth.signInWithPassword({email:$("#lg-mail").value.trim(),password:$("#lg-pw").value});
     if(error){S.adminMsg=/Invalid login/i.test(error.message)?"Correo o contraseña incorrectos.":errTxt(error);renderAdmin();return}
     S.adminMsg=""; await verificarAdmin(); if(S.isAdmin){await cargarAdmin();suscribir()} renderAdmin();};
