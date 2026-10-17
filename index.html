@@ -228,12 +228,15 @@ td.cell small{font-size:11.5px;color:var(--muted)}
    CONFIGURACIÓN — pega aquí los datos de tu proyecto de Supabase
    (Supabase → Project Settings → API)
    ===================================================================== */
-const SUPABASE_URL      = "https://mdfqlizdoemdaplttmjd.supabase.co";     
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1kZnFsaXpkb2VtZGFwbHR0bWpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIyMTU0MzksImV4cCI6MjEwNzc5MTQzOX0._NLTw-nbFexjB_eqvvXwlXIFVuhEyYjSbQ-L1xGl138"
-/* ===================================================================== */
+const SUPABASE_URL      = "https://mdfqlizdoemdaplttmjd.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1kZnFsaXpkb2VtZGFwbHR0bWpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIyMTU0MzksImV4cCI6MjEwNzc5MTQzOX0._NLTw-nbFexjB_eqvvXwlXIFVuhEyYjSbQ-L1xGl138";
 
-const CONFIG_OK = /^https:\/\/.+\.supabase\.co/.test(SUPABASE_URL) && SUPABASE_ANON_KEY.length > 40;
-const sb = CONFIG_OK && window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+const CONFIG_OK = SUPABASE_URL.length > 20 && SUPABASE_ANON_KEY.length > 40;
+
+// Forzamos la creación del cliente limpiando cualquier residuo con un objeto de opciones si es necesario
+const sb = CONFIG_OK && window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  auth: { persistSession: true, autoRefreshToken: true }
+}) : null;
 
 /* ---------- Catálogo de secciones ---------- */
 const SECCIONES = [
